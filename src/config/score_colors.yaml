@@ -1,0 +1,4 @@
+score_colors:
+  danger: 50    # Red for scores < 50
+  warning: 75   # Yellow/Gold for scores 50-74
+  success: 100  # Green for scores 75-100 

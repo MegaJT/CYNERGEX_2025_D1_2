@@ -1,0 +1,47 @@
+metric_groups:
+  "1 WEBSITE FUNCTIONALITY AND QUERY SUBMISSION":
+    iQ1: "Q1.Was Website Functional?"
+    iQ2: "Q2.Features available?"
+    iQ3: "Q3.Enough Information about contacts & locations?"
+    iQ4: "Q4.Section for Brochures/Test Drive /  Quotation"
+    iQ5: "Q5.Request sent successfully?"
+    iQ6: "Q6.Did dealrship contact for test drive?"
+    iQ6_4: "Q6_4.Test Drive Confirmed?"
+    iQ7: "Q7.Brochure download"
+    iQ8: "Q8.Call for quotation?"
+
+  "2 CALL AGENT GREETING":
+    iQ9b: "Q9b.Backgrpound Noise on Call"
+    iQ9c: "Q9c.Was call agent polite and assisting?"
+    iQ9d: "Q9d.Call Agent Attentiveness"
+    iQ9e: "Q9e.Did Call Agent Personalize Interaction?"
+    iQ9f: "Q9f.Call Agent's Manners"
+    iQ9g: "Q9g.Clarity of Call Agent's communication"
+    iQ9h: "Q9h.Did Call Agent asked relevant information?"
+    iQ9i: "Q9i.Did Call Agent give right information?"
+    iQ9j: "Q9j.Did Call Agent Confirms Appointment?"
+    iQ9k: "Q9k.Did Call Agent asked if appointment date is fine?"
+    iQ2l: "Q2l.Did customer get a confirmation on appointment?"
+    iQ9m: "Q9m.Average time spent on call?"
+
+  "3 SALES CONSULTANT INTERACTION":
+    iQ10a: "Q10a.Followup call prior to branch visit"
+    iQ10b: "Q10b.Time taken for followup-call"
+    iQ10d: "Q10d.Did Call Agent give right information?"
+    iQ10e: "Q10e.SC's attentiveness"
+    iQ10f: "Q10f.Did SC summarize the need?"
+    iQ19g: "Q19g.Did SC Personalize the conversation?"
+    iQ10h: "Q10h.SC's manners throughout the interaction"
+    iQ10i: "Q10i.Clarity of SC's communication"
+
+  "4 OVERALL IMPRESSION (WEBSITE)":
+    iQ11a: "Q11a.Follow up prior to branch visit?"
+    iQ11b: "Q11b.Time taken for followup call"
+    iQ11_1: "Q11_1.Was website easy or inconvenient?"
+    iQ11_2: "Q11_2.Overall Experience with Website"
+
+weight_variables:
+  "1 WEBSITE FUNCTIONALITY AND QUERY SUBMISSION": wREGISTERINGQUERY
+  "2 CALL AGENT GREETING": wGREETING
+  "3 SALES CONSULTANT INTERACTION": wINTERACTION
+  "4 OVERALL IMPRESSION (WEBSITE)": wOVERALLIMPRESSION 

@@ -1,0 +1,79 @@
+metric_groups:
+  INITIAL GREET:
+    iQ2a: "Q2a.Person to greet at desk"
+    iQ2b: "Q2b.Time taken to greet"
+    iQ2c: "Q2c.Reasons for delay"
+    iQ2d: "Q2d.Was Greeted or Not"
+    iQ2e: "Q2e.Greeting with Smile / Gratitude"
+    iQ2f: "Q2f.Sales Consultant Appearance"
+
+  SALES CONSULTATION INTERACTION:
+    iQ3a: "Q3a.SC's Manners throughout discussion"
+    iQ3b: "Q3b.Did SC Recheck/confirm the customer details - Appointment Customers"
+    iQ3c: "Q3c.Did SC ask personal information? - Walking Customers"
+    iQ3d: "Q3d.Did SC Personalise the Discussion"
+    iQ3d_11: "Q3d_11.SC asked source of information for Chery"
+    iQ3e: "Q3e.SC asked the qualifications questions?"
+    iQ3f: "Q3f.Did SC asked all required information from customer?"
+    iQ3g: "Q3g.Did SC offer water/beverage?"
+    iQ3i: "Q3i.SC's attentiveness"
+    iQ3j: "Q3j.Did SC convince to buy early?"
+    iQ3k: "Q3k.Did SC asked Spouse Preference?"
+    iQ3l: "Q3l.Did SC Summarize customer needs"
+    iQ3m: "Q3m.SC's frendiliness "
+    iQ3n: "Q3n.Did SC offer Business Card?"
+
+  SALES CONSULTATION KNOWLEDGE:
+    iQ4a: "Q4a.Did SC Stated Advance vs. Comp.?"
+    iQ4b: "Q4b.SC's Manners in Explanation"
+    iQ4c: "Q4c.DiD SC explained all features/brochure/other information?"
+    iQ4d: "Q4d.Did SC built Trust?"
+    iQ4e: "Q4e.Was SC logical and sensible?"
+    iQ4f: "Q4f.Did SC offer Test Drive?"
+    iQ4g: "Q4g.Did SC convince for Test Drive?"
+    iQ4h: "Q4h.SC's clarity about vehicle's immediate availability"
+    iQ4i: "Q4i.Did SC explain the booking process?"
+
+  CLOSING / FINANCE / DOCUMENTATION:
+    iQ5a: "Q5a.Did SC promoted service department?"
+    iQ5b: "Q5b.Did SC explain vehicle pricing?"
+    iQ5c: "Q5c.Did SC explain values of freebies/offers?"
+    iQ5d: "Q5d.SC's clarifies on Bank/Finance eligibility"
+    iQ5e: "Q5e.Did SC explain the finance/lease/promotional offers"
+    iQ5f: "Q5f.Did SC give reasons for no finance eligibility?"
+    iQ5g: "Q5g.How SC respond in case of object to buy Chery"
+    iQ5h: "Q5h.Did SC close conversation in positive way?"
+
+  FACILITIES IN SHOWROOM:
+    iQ6a: "Q6a.Appearance of sales area"
+    iQ6c: "Q6c.Visible Amenities"
+    iQ6d: "Q6d.Appearance of seating area"
+    iQ6e: "Q6e.Toliet Facilities"
+    iQ6f: "Q6f.Car Display Quality"
+    iQ6g: "Q6g.Vehicle Inventory at Showroom"
+
+  POST VISIT COMMUNICATION/FOLLOW UP:
+    iQ8a: "Q8a.Did SC followup?"
+    iQ8b: "Q8b.Time taken for followup"
+    iQ8c: "Q8c.Closing Conversation of a Followup Call"
+
+  OVERALL IMPRESSION:
+    iQ7a: "Q7a.Overall Experience"
+    iQ7c: "Q7c.Overall Sales Process"
+    iQ7d: "Q7d.Was SC convincing and logical?"
+    iQ7f: "Q7f.Likelihood to return to delarship"
+
+  PARKING / GUIDANCE AT ENTRY:
+    iQ1a: "Q1a.Parking Guidance - Appointment Customers"
+    iQ1b: "Q1b.Parking Guidance - Walking Customers"
+    iQ1c: "Q1c.Parking Availability"
+
+weight_variables:
+  INITIAL GREET: wInitialgreet
+  SALES CONSULTATION INTERACTION: wCONSULTANTINTERACTION
+  SALES CONSULTATION KNOWLEDGE: wCONSULTANTKNOWLEDGE
+  CLOSING / FINANCE / DOCUMENTATION: wClosing
+  FACILITIES IN SHOWROOM: wFacilityEnvironment
+  POST VISIT COMMUNICATION/FOLLOW UP: wFollowup
+  OVERALL IMPRESSION: wOverallImpression
+  PARKING / GUIDANCE AT ENTRY: wFacility
