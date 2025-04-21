@@ -5,7 +5,7 @@ from dash.exceptions import PreventUpdate
 import pandas as pd
 
 # Import from our modules
-from data_loader import load_branch_data, load_contact_center_data, prepare_dashboard_data
+from data_loader import load_branch_data, load_contact_center_data, load_website_data, prepare_dashboard_data
 from layout_components import create_segment_layout
 from callbacks import register_callbacks
 from config import SEGMENTS
@@ -19,9 +19,10 @@ server = app.server
 # Load the data for each segment
 branch_df, branch_processed_data, branch_available_months, branch_branches, branch_appointment_types, branch_nationalities = load_branch_data()
 contact_center_df, contact_center_processed_data, contact_center_available_months, _, _, _ = load_contact_center_data()
+website_df, website_processed_data, website_available_months, _, _, _ = load_website_data()
 
 # Combine processed data
-processed_data = pd.concat([branch_processed_data, contact_center_processed_data], ignore_index=True)
+processed_data = pd.concat([branch_processed_data, contact_center_processed_data, website_processed_data], ignore_index=True)
 
 # Define the app layout
 app.layout = html.Div([
@@ -54,7 +55,8 @@ app.layout = html.Div([
 ], className="dashboard-container")
 
 # Register all callbacks
-register_callbacks(app, branch_df, contact_center_df, processed_data, branch_available_months, contact_center_available_months)
+register_callbacks(app, branch_df, contact_center_df, website_df, processed_data, 
+                  branch_available_months, contact_center_available_months, website_available_months)
 
 if __name__ == "__main__":
     app.run(debug=True)
