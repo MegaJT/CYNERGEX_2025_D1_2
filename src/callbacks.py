@@ -4,8 +4,8 @@ from datetime import datetime, timedelta
 from data_loader import filter_data,  prepare_dashboard_data
 from layout_components import create_segment_layout, create_group_section
 
-def register_callbacks(app, branch_df, contact_center_df, website_df, processed_data, 
-                      branch_available_months, contact_center_available_months, website_available_months):
+def register_callbacks(app, branch_df, contact_center_df, website_df, social_media_df, processed_data, 
+                      branch_available_months, contact_center_available_months, website_available_months, social_media_available_months):
     """Register all callbacks for the application"""
     
     # Callback to update content based on selected tab
@@ -32,6 +32,11 @@ def register_callbacks(app, branch_df, contact_center_df, website_df, processed_
                 appointment_types = ['Overall']
                 nationalities = ['Overall']
                 available_months = website_available_months
+            elif active_tab == 'social-media':
+                branches = ['Overall']
+                appointment_types = ['Overall']
+                nationalities = ['Overall']
+                available_months = social_media_available_months
             else:
                 branches = ['Overall']
                 appointment_types = ['Overall']
@@ -141,15 +146,31 @@ def register_callbacks(app, branch_df, contact_center_df, website_df, processed_
         
         return updated_group_sections, f"Base: {visit_count} Visits"
 
-    # Placeholder callback for social-media segment
+    # Callback for social-media segment
     @app.callback(
         Output(f"social-media-groups-container", "children"),
         Output(f"social-media-visit-count", "children"),
-        [Input(f"social-media-branch-filter", "value"),
-         Input(f"social-media-appointment-filter", "value"),
-         Input(f"social-media-month-filter", "value"),
-         Input(f"social-media-nationality-filter", "value")]
+        Input(f"social-media-month-filter", "value")
     )
-    def update_social_media_content(branch, appointment_type, month, nationality):
-        # For now, just return placeholder data
-        return [], f"Base: 0 Visits"
+    def update_social_media_content(month):
+        # Filter the raw dataframe based on month selection
+        filtered_raw_df = filter_data(social_media_df, "Overall", "Overall", month, "Overall")
+        
+        # Update visit count
+        visit_count = len(filtered_raw_df)
+        
+        # Recalculate the metrics based on the filtered data
+        filtered_processed_data = prepare_dashboard_data(filtered_raw_df, social_media_available_months, 'social-media')
+        
+        # Get the social-media segment data
+        df_segment = filtered_processed_data[filtered_processed_data['segment'] == 'social-media']
+        
+        # Get unique groups
+        groups = df_segment['group'].unique()
+        
+        # Create updated group sections
+        updated_group_sections = [
+            create_group_section('social-media', group, df_segment) for group in groups
+        ]
+        
+        return updated_group_sections, f"Base: {visit_count} Visits"

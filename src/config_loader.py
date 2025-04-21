@@ -73,6 +73,16 @@ class ConfigLoader:
         """Get Website weight variables."""
         config = self.get_config('website_metrics.yaml')
         return config['weight_variables']
+    
+    def get_social_media_metric_groups(self) -> Dict[str, Dict[str, str]]:
+        """Get Social Media metric group definitions."""
+        config = self.get_config('social_media_metrics.yaml')
+        return config['metric_groups']
+    
+    def get_social_media_weight_variables(self) -> Dict[str, str]:
+        """Get Social Media weight variables."""
+        config = self.get_config('social_media_metrics.yaml')
+        return config['weight_variables']
 
 # Create a global instance
 config_loader = ConfigLoader() 

@@ -13,4 +13,8 @@ CONTACT_CENTER_WEIGHT_VARS = config_loader.get_contact_center_weight_variables()
 
 # Load Website configurations
 WEBSITE_METRIC_GROUPS = config_loader.get_website_metric_groups()
-WEBSITE_WEIGHT_VARS = config_loader.get_website_weight_variables() 
+WEBSITE_WEIGHT_VARS = config_loader.get_website_weight_variables()
+
+# Load Social Media configurations
+SOCIAL_MEDIA_METRIC_GROUPS = config_loader.get_social_media_metric_groups()
+SOCIAL_MEDIA_WEIGHT_VARS = config_loader.get_social_media_weight_variables() 

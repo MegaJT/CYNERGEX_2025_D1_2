@@ -29,7 +29,7 @@ def load_data(data_file, segment):
             except:
                 df = pd.DataFrame()
         
-        elif segment == 'Social Media':
+        elif segment == 'social media':
             try:
                 df['WAVE'] = df['WAVE'].map(MONTH_DICT)
             except:
@@ -126,14 +126,20 @@ def load_website_data():
     return website_df, processed_data, AVAILABLE_MONTHS, [], [], []
 
 def load_social_media_data():
-    """Load and process social media data from CSV file."""
-    try:
-        df = pd.read_csv('S_WEBSITE_EVAL CSV.csv')
-        df['segment'] = 'social-media'
-        return df
-    except Exception as e:
-        print(f"Error loading social media data: {e}")
-        return pd.DataFrame()
+    """Load social media data and prepare it for the dashboard"""
+    # Load the social media evaluation data
+    social_media_df = load_data('S_SM_EVAL CSV.csv', 'social media')
+    
+    if social_media_df.empty:
+        return social_media_df, pd.DataFrame(), [], [], [], []
+    
+    # Get available months
+    AVAILABLE_MONTHS = get_available_months(social_media_df)
+    
+    # Prepare dashboard data
+    processed_data = prepare_dashboard_data(social_media_df, AVAILABLE_MONTHS, 'social-media')
+    
+    return social_media_df, processed_data, AVAILABLE_MONTHS, [], [], []
 
 def prepare_dashboard_data(df, AVAILABLE_MONTHS=None, segment=None):
     """Prepare data for the dashboard"""
@@ -160,8 +166,9 @@ def prepare_dashboard_data(df, AVAILABLE_MONTHS=None, segment=None):
         metric_groups = WEBSITE_METRIC_GROUPS
         weight_vars = WEBSITE_WEIGHT_VARS
     elif segment == 'social-media':
-        metrics = load_social_media_metrics()
-        weight_vars = load_social_media_weight_variables()
+        from config import SOCIAL_MEDIA_METRIC_GROUPS, SOCIAL_MEDIA_WEIGHT_VARS
+        metric_groups = SOCIAL_MEDIA_METRIC_GROUPS
+        weight_vars = SOCIAL_MEDIA_WEIGHT_VARS
     else:
         return pd.DataFrame(columns=['segment', 'group', 'metric_id', 'metric', 'score', 'monthly_scores', 'is_group_score'])
     
