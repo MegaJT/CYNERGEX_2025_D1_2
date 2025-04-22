@@ -1,3 +1,7 @@
+# https://cynergex-2025-d1-2.onrender.com/
+# https://api.render.com/deploy/srv-d03lh0idbo4c738goj90?key=I9fsmFEvfHw
+
+
 import dash
 from dash import dcc, html, Input, Output, callback, State
 import dash_bootstrap_components as dbc
@@ -81,9 +85,9 @@ app.user_data = {}
 def load_all_data():
     # Load the raw data for each segment
     branch_df, branch_processed_data, branch_available_months, branch_branches, branch_appointment_types, branch_nationalities, branch_sc_names = load_branch_data()
-    contact_center_df, contact_center_processed_data, contact_center_available_months, _, _, _ = load_contact_center_data()
-    website_df, website_processed_data, website_available_months, _, _, _ = load_website_data()
-    social_media_df, social_media_processed_data, social_media_available_months, _, _, _ = load_social_media_data()
+    contact_center_df, contact_center_processed_data, contact_center_available_months, _, _, _, contact_center_sc_names = load_contact_center_data()
+    website_df, website_processed_data, website_available_months, _, _, _, website_sc_names = load_website_data()
+    social_media_df, social_media_processed_data, social_media_available_months, _, _, _, social_media_sc_names = load_social_media_data()
     
     # Pre-filter branch data for each user
     for user_id in VALID_CODES.values():
@@ -92,12 +96,16 @@ def load_all_data():
             filtered_branch_df = branch_df.copy()
             filtered_branch_processed = branch_processed_data.copy()
             filtered_branches = branch_branches.copy()
-            filtered_sc_names = branch_sc_names.copy()
+            # Combine SC names from all segments
+            all_sc_names = list(set(branch_sc_names + contact_center_sc_names + website_sc_names + social_media_sc_names))
+            filtered_sc_names = sorted(all_sc_names) if all_sc_names else branch_sc_names.copy()
         else:
             # Filter data for specific branch/location
             filtered_branch_df = branch_df[branch_df['Branch'].str.contains(user_id, case=False)]
             filtered_branches = [b for b in branch_branches if user_id.lower() in b.lower()]
-            filtered_sc_names = branch_sc_names.copy()  # Keep all SC names for now
+            # Combine SC names from all segments for this branch
+            all_sc_names = list(set(branch_sc_names + contact_center_sc_names + website_sc_names + social_media_sc_names))
+            filtered_sc_names = sorted(all_sc_names) if all_sc_names else branch_sc_names.copy()
         
         # Store pre-filtered data for this user
         app.user_data[user_id] = {
@@ -113,17 +121,20 @@ def load_all_data():
             'contact-center': {
                 'df': contact_center_df,
                 'processed': contact_center_processed_data,
-                'months': contact_center_available_months
+                'months': contact_center_available_months,
+                'sc_names': contact_center_sc_names
             },
             'website': {
                 'df': website_df,
                 'processed': website_processed_data,
-                'months': website_available_months
+                'months': website_available_months,
+                'sc_names': website_sc_names
             },
             'social-media': {
                 'df': social_media_df,
                 'processed': social_media_processed_data,
-                'months': social_media_available_months
+                'months': social_media_available_months,
+                'sc_names': social_media_sc_names
             }
         }
         
@@ -155,9 +166,6 @@ def create_dashboard_layout(user_id):
             ], width=8, className="text-center"),
             dbc.Col([
                 html.Img(src=app.get_asset_url('CYN_Logo1.png'), className="logo float-right")
-            ], width=2),
-            dbc.Col([
-                html.Button('Logout', id='logout-button', className='logout-button')
             ], width=2)
         ], className="header-row mb-4"),
         

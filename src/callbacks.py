@@ -29,30 +29,13 @@ def register_callbacks(app):
                 nationalities = segment_data['nationalities']
                 sc_names = segment_data['sc_names']
                 available_months = segment_data['months']
-            elif active_tab == 'contact-center':
-                branches = ['Overall']
-                appointment_types = ['Overall']
-                nationalities = ['Overall']
-                sc_names = ['Overall']
-                available_months = segment_data['months']
-            elif active_tab == 'website':
-                branches = ['Overall']
-                appointment_types = ['Overall']
-                nationalities = ['Overall']
-                sc_names = ['Overall']
-                available_months = segment_data['months']
-            elif active_tab == 'social-media':
-                branches = ['Overall']
-                appointment_types = ['Overall']
-                nationalities = ['Overall']
-                sc_names = ['Overall']
-                available_months = segment_data['months']
             else:
+                # For other segments, use their own SC names
                 branches = ['Overall']
                 appointment_types = ['Overall']
                 nationalities = ['Overall']
-                sc_names = ['Overall']
-                available_months = []
+                sc_names = app.user_data[user_id]['branch']['sc_names']  # Use branch SC names for all segments
+                available_months = segment_data['months']
             
             return create_segment_layout(active_tab, user_data['combined_processed'], available_months, branches, appointment_types, nationalities, sc_names), active_tab
         return "Select a segment to view data.", 'branch'
@@ -113,9 +96,10 @@ def register_callbacks(app):
         Output(f"contact-center-groups-container", "children"),
         Output(f"contact-center-visit-count", "children"),
         [Input(f"contact-center-month-filter", "value"),
+         Input(f"contact-center-sc-filter", "value"),
          Input("user-id", "data")]
     )
-    def update_contact_center_content(month, user_id):
+    def update_contact_center_content(month, sc_name, user_id):
         if user_id not in app.user_data:
             return [], "Base: 0 Visits"
         
@@ -123,8 +107,8 @@ def register_callbacks(app):
         contact_center_df = app.user_data[user_id]['contact-center']['df']
         contact_center_available_months = app.user_data[user_id]['contact-center']['months']
         
-        # Filter the raw dataframe based on month selection
-        filtered_raw_df = filter_data(contact_center_df, "Overall", "Overall", month, "Overall", "Overall")
+        # Filter the raw dataframe based on selections
+        filtered_raw_df = filter_data(contact_center_df, "Overall", "Overall", month, "Overall", sc_name)
         
         # Update visit count
         visit_count = len(filtered_raw_df)
@@ -150,9 +134,10 @@ def register_callbacks(app):
         Output(f"website-groups-container", "children"),
         Output(f"website-visit-count", "children"),
         [Input(f"website-month-filter", "value"),
+         Input(f"website-sc-filter", "value"),
          Input("user-id", "data")]
     )
-    def update_website_content(month, user_id):
+    def update_website_content(month, sc_name, user_id):
         if user_id not in app.user_data:
             return [], "Base: 0 Visits"
         
@@ -160,8 +145,8 @@ def register_callbacks(app):
         website_df = app.user_data[user_id]['website']['df']
         website_available_months = app.user_data[user_id]['website']['months']
         
-        # Filter the raw dataframe based on month selection
-        filtered_raw_df = filter_data(website_df, "Overall", "Overall", month, "Overall", "Overall")
+        # Filter the raw dataframe based on selections
+        filtered_raw_df = filter_data(website_df, "Overall", "Overall", month, "Overall", sc_name)
         
         # Update visit count
         visit_count = len(filtered_raw_df)
@@ -187,9 +172,10 @@ def register_callbacks(app):
         Output(f"social-media-groups-container", "children"),
         Output(f"social-media-visit-count", "children"),
         [Input(f"social-media-month-filter", "value"),
+         Input(f"social-media-sc-filter", "value"),
          Input("user-id", "data")]
     )
-    def update_social_media_content(month, user_id):
+    def update_social_media_content(month, sc_name, user_id):
         if user_id not in app.user_data:
             return [], "Base: 0 Visits"
         
@@ -197,8 +183,8 @@ def register_callbacks(app):
         social_media_df = app.user_data[user_id]['social-media']['df']
         social_media_available_months = app.user_data[user_id]['social-media']['months']
         
-        # Filter the raw dataframe based on month selection
-        filtered_raw_df = filter_data(social_media_df, "Overall", "Overall", month, "Overall", "Overall")
+        # Filter the raw dataframe based on selections
+        filtered_raw_df = filter_data(social_media_df, "Overall", "Overall", month, "Overall", sc_name)
         
         # Update visit count
         visit_count = len(filtered_raw_df)

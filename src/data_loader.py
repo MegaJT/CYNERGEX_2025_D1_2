@@ -14,55 +14,66 @@ def load_data(data_file, segment):
         df = df.replace(r'^\s*$', np.nan, regex=True)
         df = df.infer_objects(copy=False)
         
+        # Common SC_NAME mapping for all segments
+        sc_name_mapping = {
+            1: 'Mona Slim',
+            2: 'Omar AlBaba',
+            3: 'Abdulhalim Shousha',
+            4: 'Mohammad Malla',
+            5: 'Lyka Camba',
+            6: 'Majd Tabbal',
+            7: 'Osama ElNashar',
+            8: 'AlNaddi Hoar',
+            9: 'Abul Hassan',
+            10: 'AlMeqdad Dayoub',
+            11: 'Eidarous Eidarous',
+            12: 'Fatima Hotait',
+            13: 'Rolan Dawood',
+            14: 'Adham Elhalaby',
+            15: 'Jennie Villanueva',
+            16: 'Hiba Taha',
+            17: 'Yaman Zaitoun',
+            18: 'NO SC ASSIGNED',
+        }
+        
         if segment == 'Branch':
             try:
                 df['Branch'] = df['Branch'].map({1: 'Dubai', 2: 'Sharjah', 3: 'Abu Dhabi'})
                 df['NATIONALITY'] = df['NATIONALITY'].map({1: 'Emarati', 2: 'Non-Emarati'})
                 df['Q1_1'] = df['Q1_1'].map({1: 'Social Media Lead', 2: 'Website Visit Lead', 3: 'Call Centre Lead', 4: 'Walkin Customer'})
                 df['WAVE'] = df['WAVE'].map(MONTH_DICT)
-                # Add SC_NAME mapping (1:A, 2:B, etc.)
-                df['SC_NAME'] = df['SC_NAME'].map({1:'Mona Slim',
-                                                    2:'Omar AlBaba',
-                                                    3:'Abdulhalim Shousha',
-                                                    4:'Mohammad Malla',
-                                                    5:'Lyka Camba',
-                                                    6:'Majd Tabbal',
-                                                    7:'Osama ElNashar',
-                                                    8:'AlNaddi Hoar',
-                                                    9:'Abul Hassan',
-                                                    10:'AlMeqdad Dayoub',
-                                                    11:'Eidarous Eidarous',
-                                                    12:'Fatima Hotait',
-                                                    13:'Rolan Dawood',
-                                                    14:'Adham Elhalaby',
-                                                    15:'Jennie Villanueva',
-                                                    16:'Hiba Taha',
-                                                    17:'Yaman Zaitoun'})
-
-            except:
-                df = pd.DataFrame()  # Create empty dataframe if mapping fails
+                if 'SC_NAME' in df.columns:
+                    df['SC_NAME'] = df['SC_NAME'].map(sc_name_mapping)
+            except Exception as e:
+                df = pd.DataFrame()
         
         elif segment == 'Contact Centre':
             try:
                 df['WAVE'] = df['WAVE'].map(MONTH_DICT)
-            except:
+                if 'SC_NAME' in df.columns:
+                    df['SC_NAME'] = df['SC_NAME'].map(sc_name_mapping)
+            except Exception as e:
                 df = pd.DataFrame()
         
-        elif segment == 'social media':
+        elif segment == 'Social Media':
             try:
                 df['WAVE'] = df['WAVE'].map(MONTH_DICT)
-            except:
+                if 'SC_NAME' in df.columns:
+                    df['SC_NAME'] = df['SC_NAME'].map(sc_name_mapping)
+            except Exception as e:
                 df = pd.DataFrame()
         
         elif segment == 'Website':
             try:
                 df['WAVE'] = df['WAVE'].map(MONTH_DICT)
-            except:
+                if 'SC_NAME' in df.columns:
+                    df['SC_NAME'] = df['SC_NAME'].map(sc_name_mapping)
+            except Exception as e:
                 df = pd.DataFrame()
                 
         return df
-    except:
-        return pd.DataFrame()  # Return empty dataframe if file not found
+    except Exception as e:
+        return pd.DataFrame()
 
 def filter_data_by_user(df, user_id):
     """
@@ -153,72 +164,102 @@ def load_contact_center_data(user_id=None):
     Load contact center data and prepare it for the dashboard
     
     Args:
-        user_id (str, optional): User ID (not used for filtering contact center data)
+        user_id (str, optional): User ID to filter data by branch. Admin sees all data.
     
     Returns:
-        tuple: (contact_center_df, processed_data, AVAILABLE_MONTHS, [], [], [])
+        tuple: (contact_center_df, processed_data, AVAILABLE_MONTHS, branches, appointment_types, nationalities, sc_names)
     """
     # Load the contact center evaluation data
     contact_center_df = load_data('S_CONTACT_CENTRE CSV.csv', 'Contact Centre')
     
     if contact_center_df.empty:
-        return contact_center_df, pd.DataFrame(), [], [], [], []
+        return contact_center_df, pd.DataFrame(), [], [], [], [], []
+    
+    # Filter data by user_id if provided
+    if user_id and user_id != 'Admin':
+        contact_center_df = filter_data_by_user(contact_center_df, user_id)
     
     # Get available months
     AVAILABLE_MONTHS = get_available_months(contact_center_df)
     
+    # Get unique values for filters
+    branches = ['Overall']
+    appointment_types = ['Overall']
+    nationalities = ['Overall']
+    sc_names = get_unique_values(contact_center_df, 'SC_NAME', [])
+    
     # Prepare dashboard data
     processed_data = prepare_dashboard_data(contact_center_df, AVAILABLE_MONTHS, 'contact-center')
     
-    return contact_center_df, processed_data, AVAILABLE_MONTHS, [], [], []
+    return contact_center_df, processed_data, AVAILABLE_MONTHS, branches, appointment_types, nationalities, sc_names
 
 def load_website_data(user_id=None):
     """
     Load website data and prepare it for the dashboard
     
     Args:
-        user_id (str, optional): User ID (not used for filtering website data)
+        user_id (str, optional): User ID to filter data by branch. Admin sees all data.
     
     Returns:
-        tuple: (website_df, processed_data, AVAILABLE_MONTHS, [], [], [])
+        tuple: (website_df, processed_data, AVAILABLE_MONTHS, branches, appointment_types, nationalities, sc_names)
     """
     # Load the website evaluation data
     website_df = load_data('S_WEBSITE_EVAL CSV.csv', 'Website')
     
     if website_df.empty:
-        return website_df, pd.DataFrame(), [], [], [], []
+        return website_df, pd.DataFrame(), [], [], [], [], []
+    
+    # Filter data by user_id if provided
+    if user_id and user_id != 'Admin':
+        website_df = filter_data_by_user(website_df, user_id)
     
     # Get available months
     AVAILABLE_MONTHS = get_available_months(website_df)
     
+    # Get unique values for filters
+    branches = ['Overall']
+    appointment_types = ['Overall']
+    nationalities = ['Overall']
+    sc_names = get_unique_values(website_df, 'SC_NAME', [])
+    
     # Prepare dashboard data
     processed_data = prepare_dashboard_data(website_df, AVAILABLE_MONTHS, 'website')
     
-    return website_df, processed_data, AVAILABLE_MONTHS, [], [], []
+    return website_df, processed_data, AVAILABLE_MONTHS, branches, appointment_types, nationalities, sc_names
 
 def load_social_media_data(user_id=None):
     """
     Load social media data and prepare it for the dashboard
     
     Args:
-        user_id (str, optional): User ID (not used for filtering social media data)
+        user_id (str, optional): User ID to filter data by branch. Admin sees all data.
     
     Returns:
-        tuple: (social_media_df, processed_data, AVAILABLE_MONTHS, [], [], [])
+        tuple: (social_media_df, processed_data, AVAILABLE_MONTHS, branches, appointment_types, nationalities, sc_names)
     """
     # Load the social media evaluation data
-    social_media_df = load_data('S_SM_EVAL CSV.csv', 'social media')
+    social_media_df = load_data('S_SM_EVAL CSV.csv', 'Social Media')
     
     if social_media_df.empty:
-        return social_media_df, pd.DataFrame(), [], [], [], []
+        return social_media_df, pd.DataFrame(), [], [], [], [], []
+    
+    # Filter data by user_id if provided
+    if user_id and user_id != 'Admin':
+        social_media_df = filter_data_by_user(social_media_df, user_id)
     
     # Get available months
     AVAILABLE_MONTHS = get_available_months(social_media_df)
     
+    # Get unique values for filters
+    branches = ['Overall']
+    appointment_types = ['Overall']
+    nationalities = ['Overall']
+    sc_names = get_unique_values(social_media_df, 'SC_NAME', [])
+    
     # Prepare dashboard data
     processed_data = prepare_dashboard_data(social_media_df, AVAILABLE_MONTHS, 'social-media')
     
-    return social_media_df, processed_data, AVAILABLE_MONTHS, [], [], []
+    return social_media_df, processed_data, AVAILABLE_MONTHS, branches, appointment_types, nationalities, sc_names
 
 def prepare_dashboard_data(df, AVAILABLE_MONTHS=None, segment=None):
     """Prepare data for the dashboard"""
@@ -316,6 +357,11 @@ def filter_data(df, branch, appointment_type, month, nationality, sc_name):
     """Filter data based on user selections"""
     filtered_df = df.copy()
     
+    # Debug: Print initial data shape and SC_NAME values
+    print(f"Initial data shape: {filtered_df.shape}")
+    if 'SC_NAME' in filtered_df.columns:
+        print(f"Available SC_NAME values: {filtered_df['SC_NAME'].unique()}")
+    
     if branch != "Overall" and 'Branch' in filtered_df.columns:
         filtered_df = filtered_df[filtered_df['Branch'] == branch]
     
@@ -335,7 +381,12 @@ def filter_data(df, branch, appointment_type, month, nationality, sc_name):
     if nationality != "Overall" and 'NATIONALITY' in filtered_df.columns:
         filtered_df = filtered_df[filtered_df['NATIONALITY'] == nationality]
         
+    # Handle Sales Consultant filter using SC_NAME column
     if sc_name != "Overall" and 'SC_NAME' in filtered_df.columns:
+        print(f"Filtering by SC_NAME: {sc_name}")
+        print(f"Data before SC_NAME filter: {filtered_df.shape}")
         filtered_df = filtered_df[filtered_df['SC_NAME'] == sc_name]
+        print(f"Data after SC_NAME filter: {filtered_df.shape}")
+        print(f"Filtered SC_NAME values: {filtered_df['SC_NAME'].unique()}")
     
     return filtered_df

@@ -191,18 +191,24 @@ def create_segment_layout(segment, processed_data, AVAILABLE_MONTHS, branches, a
                                             value="Overall",
                                             clearable=False
                                         )
-                                    ], width=2),
-                                    dbc.Col([
-                                        html.Label("Sales Consultant"),
-                                        dcc.Dropdown(
-                                            id=f"{segment}-sc-filter",
-                                            options=[{"label": "Overall", "value": "Overall"}] + 
-                                                    [{"label": sc, "value": sc} for sc in sc_names],
-                                            value="Overall",
-                                            clearable=False
-                                        )
                                     ], width=2)
-                                ] if segment == 'branch' else [])
+                                ] if segment == 'branch' else []),
+                                # Show Sales Consultant filter for all segments
+                                dbc.Col([
+                                    html.Label("Sales Consultant"),
+                                    dcc.Dropdown(
+                                        id=f"{segment}-sc-filter",
+                                        options=[{"label": "Overall", "value": "Overall"}] + 
+                                                [{"label": sc, "value": sc} for sc in sc_names],
+                                        value="Overall",
+                                        clearable=False
+                                    )
+                                ], width=2),
+                                # Add logout button next to the last filter
+                                dbc.Col([
+                                    html.Label("logout"),  # Empty label for alignment
+                                    html.Button('Logout', id='logout-button', className='logout-button', style={'width': '100%'})
+                                ], width=2)
                             ])
                         ])
                     )

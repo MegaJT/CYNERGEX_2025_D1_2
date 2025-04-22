@@ -1,5 +1,10 @@
 metric_groups:
-  INITIAL GREET:
+  1.PARKING / GUIDANCE AT ENTRY:
+    iQ1a: "Q1a.Parking Guidance - Appointment Customers"
+    iQ1b: "Q1b.Parking Guidance - Walking Customers"
+    iQ1c: "Q1c.Parking Availability"
+        
+  2.INITIAL GREET:
     iQ2a: "Q2a.Person to greet at desk"
     iQ2b: "Q2b.Time taken to greet"
     iQ2c: "Q2c.Reasons for delay"
@@ -7,7 +12,7 @@ metric_groups:
     iQ2e: "Q2e.Greeting with Smile / Gratitude"
     iQ2f: "Q2f.Sales Consultant Appearance"
 
-  SALES CONSULTATION INTERACTION:
+  3.SALES CONSULTATION INTERACTION:
     iQ3a: "Q3a.SC's Manners throughout discussion"
     iQ3b: "Q3b.Did SC Recheck/confirm the customer details - Appointment Customers"
     iQ3c: "Q3c.Did SC ask personal information? - Walking Customers"
@@ -23,7 +28,7 @@ metric_groups:
     iQ3m: "Q3m.SC's frendiliness "
     iQ3n: "Q3n.Did SC offer Business Card?"
 
-  SALES CONSULTATION KNOWLEDGE:
+  4.SALES CONSULTATION KNOWLEDGE:
     iQ4a: "Q4a.Did SC Stated Advance vs. Comp.?"
     iQ4b: "Q4b.SC's Manners in Explanation"
     iQ4c: "Q4c.DiD SC explained all features/brochure/other information?"
@@ -34,7 +39,7 @@ metric_groups:
     iQ4h: "Q4h.SC's clarity about vehicle's immediate availability"
     iQ4i: "Q4i.Did SC explain the booking process?"
 
-  CLOSING / FINANCE / DOCUMENTATION:
+  5.CLOSING / FINANCE / DOCUMENTATION:
     iQ5a: "Q5a.Did SC promoted service department?"
     iQ5b: "Q5b.Did SC explain vehicle pricing?"
     iQ5c: "Q5c.Did SC explain values of freebies/offers?"
@@ -44,7 +49,7 @@ metric_groups:
     iQ5g: "Q5g.How SC respond in case of object to buy Chery"
     iQ5h: "Q5h.Did SC close conversation in positive way?"
 
-  FACILITIES IN SHOWROOM:
+  6.FACILITIES IN SHOWROOM:
     iQ6a: "Q6a.Appearance of sales area"
     iQ6c: "Q6c.Visible Amenities"
     iQ6d: "Q6d.Appearance of seating area"
@@ -52,22 +57,18 @@ metric_groups:
     iQ6f: "Q6f.Car Display Quality"
     iQ6g: "Q6g.Vehicle Inventory at Showroom"
 
-  POST VISIT COMMUNICATION/FOLLOW UP:
+  7.POST VISIT COMMUNICATION/FOLLOW UP:
     iQ8a: "Q8a.Did SC followup?"
     iQ8b: "Q8b.Time taken for followup"
     iQ8c: "Q8c.Closing Conversation of a Followup Call"
 
-  OVERALL IMPRESSION:
+  8.OVERALL IMPRESSION:
     iQ7a: "Q7a.Overall Experience"
-    iQ7c: "Q7c.Overall Sales Process"
     iQ7f: "Q7f.Likelihood to return to delarship"
 
-  PARKING / GUIDANCE AT ENTRY:
-    iQ1a: "Q1a.Parking Guidance - Appointment Customers"
-    iQ1b: "Q1b.Parking Guidance - Walking Customers"
-    iQ1c: "Q1c.Parking Availability"
 
 weight_variables:
+  PARKING / GUIDANCE AT ENTRY: wFacility      
   INITIAL GREET: wInitialgreet
   SALES CONSULTATION INTERACTION: wCONSULTANTINTERACTION
   SALES CONSULTATION KNOWLEDGE: wCONSULTANTKNOWLEDGE
@@ -75,4 +76,4 @@ weight_variables:
   FACILITIES IN SHOWROOM: wFacilityEnvironment
   POST VISIT COMMUNICATION/FOLLOW UP: wFollowup
   OVERALL IMPRESSION: wOverallImpression
-  PARKING / GUIDANCE AT ENTRY: wFacility
+  

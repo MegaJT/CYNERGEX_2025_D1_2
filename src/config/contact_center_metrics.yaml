@@ -1,9 +1,9 @@
 metric_groups:
-  ATTEMPTS TO GET ANSWERED:
+  1.ATTEMPTS TO GET ANSWERED:
     iQ1a: "Q1a.No of attempts for connecting"
     iQ1b: "Q1b.Did receive a call after first attempt?"
 
-  CALL AGENT GREETING:
+  2.CALL AGENT GREETING:
     iQ2b: "Q2b.Background Noise on Call"
     iQ2c: "Q2c.Was call agent polite and assisting?"
     iQ2d: "Q2d.Call Agent Attentiveness"
@@ -17,7 +17,7 @@ metric_groups:
     iQ2l: "Q2l.Did customer get a confirmation on appointment?"
     iQ2m: "Q2m.Average time spent on call?"
 
-  SALES CONSULTANT INTERACTION:
+  3.SALES CONSULTANT INTERACTION:
     iQ3a: "Q3a.Did SC call back?"
     iQ3b: "Q3b.Time to receive call from SC?"
     iQ3d: "Q3d.Did SC understand about family & needs?"
@@ -27,9 +27,7 @@ metric_groups:
     iQ3h: "Q3h.SC's manners throughout the interaction"
     iQ3i: "Q3i.Clarity of SC's communication"
 
-  OVERALL IMPRESSION:
-    iQ5a: "Q5a.Followup call prior to branch visit"
-    iQ5b: "Q5b.Time taken for followup-call"
+  4.OVERALL IMPRESSION:
     iQ5e: "Q5e.Overall Experience with contact centre"
 
 weight_variables:

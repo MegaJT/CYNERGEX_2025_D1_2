@@ -34,13 +34,11 @@ metric_groups:
     iQ11h: "Q11h.Consultant's interaction manner"
     iQ11i: "Q11i.Consultant's communication clarity"
 
-  "4 OVERALL EVALUATION":
-    iQ12a: "Q12a.Follow-up call prior to visit"
-    iQ12b: "Q12b.Timiing of that Follow-up call"
+  "4 OVERALL IMPRESSION (SOCIAL MEDIA)":
     iQ13: "Q13.Overall experience with Social Media"
 
 weight_variables:
   "1 SOCIAL MEDIA RESPONSE/AGENT EVALUATION": wSMAGENTEVAL
   "2 CALL AGENT GREETING": wGREETING
   "3 SALES CONSULTANT INTERACTION": wINTERACTION
-  "4 OVERALL EVALUATION": wOVERALLEVALUATION 
+  "4 OVERALL IMPRESSION (SOCIAL MEDIA)": wOVERALLEVALUATION 
