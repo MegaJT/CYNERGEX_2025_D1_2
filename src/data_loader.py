@@ -20,6 +20,25 @@ def load_data(data_file, segment):
                 df['NATIONALITY'] = df['NATIONALITY'].map({1: 'Emarati', 2: 'Non-Emarati'})
                 df['Q1_1'] = df['Q1_1'].map({1: 'Social Media Lead', 2: 'Website Visit Lead', 3: 'Call Centre Lead', 4: 'Walkin Customer'})
                 df['WAVE'] = df['WAVE'].map(MONTH_DICT)
+                # Add SC_NAME mapping (1:A, 2:B, etc.)
+                df['SC_NAME'] = df['SC_NAME'].map({1:'Mona Slim',
+                                                    2:'Omar AlBaba',
+                                                    3:'Abdulhalim Shousha',
+                                                    4:'Mohammad Malla',
+                                                    5:'Lyka Camba',
+                                                    6:'Majd Tabbal',
+                                                    7:'Osama ElNashar',
+                                                    8:'AlNaddi Hoar',
+                                                    9:'Abul Hassan',
+                                                    10:'AlMeqdad Dayoub',
+                                                    11:'Eidarous Eidarous',
+                                                    12:'Fatima Hotait',
+                                                    13:'Rolan Dawood',
+                                                    14:'Adham Elhalaby',
+                                                    15:'Jennie Villanueva',
+                                                    16:'Hiba Taha',
+                                                    17:'Yaman Zaitoun'})
+
             except:
                 df = pd.DataFrame()  # Create empty dataframe if mapping fails
         
@@ -44,6 +63,29 @@ def load_data(data_file, segment):
         return df
     except:
         return pd.DataFrame()  # Return empty dataframe if file not found
+
+def filter_data_by_user(df, user_id):
+    """
+    Filter dataframe based on user ID
+    
+    Args:
+        df (pd.DataFrame): DataFrame to filter
+        user_id (str): User ID to filter by (Admin sees all data)
+        
+    Returns:
+        pd.DataFrame: Filtered DataFrame
+    """
+    if df.empty:
+        return df
+        
+    if user_id == 'Admin':
+        return df
+    
+    # Check if 'Branch' column exists
+    if 'Branch' in df.columns:
+        return df[df['Branch'] == user_id]
+    else:
+        return df  # Return unfiltered if no Branch column
 
 def get_available_months(df):
     """Get available months from the data"""
@@ -72,13 +114,25 @@ def calculate_metric_score(df, metric_column):
     # Calculate mean, dropping NaN values
     return numeric_values.dropna().mean() if not numeric_values.empty else 0
 
-def load_branch_data():
-    """Load branch data and prepare it for the dashboard"""
+def load_branch_data(user_id=None):
+    """
+    Load branch data and prepare it for the dashboard, filtered by user_id if provided
+    
+    Args:
+        user_id (str, optional): User ID to filter data by branch. Admin sees all data.
+    
+    Returns:
+        tuple: (branch_df, processed_data, AVAILABLE_MONTHS, branches, appointment_types, nationalities, sc_names)
+    """
     # Load the branch evaluation data
     branch_df = load_data('S_BRANCH_EVAL CSV.csv', 'Branch')
     
     if branch_df.empty:
-        return branch_df, pd.DataFrame(), [], [], [], []
+        return branch_df, pd.DataFrame(), [], [], [], [], []
+    
+    # Filter data by user_id if provided
+    if user_id and user_id != 'Admin':
+        branch_df = filter_data_by_user(branch_df, user_id)
     
     # Get available months
     AVAILABLE_MONTHS = get_available_months(branch_df)
@@ -87,14 +141,23 @@ def load_branch_data():
     branches = get_unique_values(branch_df, 'Branch', ['Dubai', 'Sharjah', 'Abu Dhabi'])
     appointment_types = get_unique_values(branch_df, 'Q1_1', ['Walk-in', 'Appointment'])
     nationalities = get_unique_values(branch_df, 'NATIONALITY', ['Local', 'Expat'])
+    sc_names = get_unique_values(branch_df, 'SC_NAME', [])
     
     # Prepare dashboard data
     processed_data = prepare_dashboard_data(branch_df, AVAILABLE_MONTHS, 'branch')
     
-    return branch_df, processed_data, AVAILABLE_MONTHS, branches, appointment_types, nationalities
+    return branch_df, processed_data, AVAILABLE_MONTHS, branches, appointment_types, nationalities, sc_names
 
-def load_contact_center_data():
-    """Load contact center data and prepare it for the dashboard"""
+def load_contact_center_data(user_id=None):
+    """
+    Load contact center data and prepare it for the dashboard
+    
+    Args:
+        user_id (str, optional): User ID (not used for filtering contact center data)
+    
+    Returns:
+        tuple: (contact_center_df, processed_data, AVAILABLE_MONTHS, [], [], [])
+    """
     # Load the contact center evaluation data
     contact_center_df = load_data('S_CONTACT_CENTRE CSV.csv', 'Contact Centre')
     
@@ -109,8 +172,16 @@ def load_contact_center_data():
     
     return contact_center_df, processed_data, AVAILABLE_MONTHS, [], [], []
 
-def load_website_data():
-    """Load website data and prepare it for the dashboard"""
+def load_website_data(user_id=None):
+    """
+    Load website data and prepare it for the dashboard
+    
+    Args:
+        user_id (str, optional): User ID (not used for filtering website data)
+    
+    Returns:
+        tuple: (website_df, processed_data, AVAILABLE_MONTHS, [], [], [])
+    """
     # Load the website evaluation data
     website_df = load_data('S_WEBSITE_EVAL CSV.csv', 'Website')
     
@@ -125,8 +196,16 @@ def load_website_data():
     
     return website_df, processed_data, AVAILABLE_MONTHS, [], [], []
 
-def load_social_media_data():
-    """Load social media data and prepare it for the dashboard"""
+def load_social_media_data(user_id=None):
+    """
+    Load social media data and prepare it for the dashboard
+    
+    Args:
+        user_id (str, optional): User ID (not used for filtering social media data)
+    
+    Returns:
+        tuple: (social_media_df, processed_data, AVAILABLE_MONTHS, [], [], [])
+    """
     # Load the social media evaluation data
     social_media_df = load_data('S_SM_EVAL CSV.csv', 'social media')
     
@@ -233,7 +312,7 @@ def prepare_dashboard_data(df, AVAILABLE_MONTHS=None, segment=None):
         # Return an empty DataFrame with the expected columns
         return pd.DataFrame(columns=['segment', 'group', 'metric_id', 'metric', 'score', 'monthly_scores', 'is_group_score'])
 
-def filter_data(df, branch, appointment_type, month, nationality):
+def filter_data(df, branch, appointment_type, month, nationality, sc_name):
     """Filter data based on user selections"""
     filtered_df = df.copy()
     
@@ -255,5 +334,8 @@ def filter_data(df, branch, appointment_type, month, nationality):
     
     if nationality != "Overall" and 'NATIONALITY' in filtered_df.columns:
         filtered_df = filtered_df[filtered_df['NATIONALITY'] == nationality]
+        
+    if sc_name != "Overall" and 'SC_NAME' in filtered_df.columns:
+        filtered_df = filtered_df[filtered_df['SC_NAME'] == sc_name]
     
     return filtered_df

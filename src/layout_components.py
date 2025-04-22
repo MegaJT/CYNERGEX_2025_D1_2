@@ -130,7 +130,7 @@ def create_group_section(segment, group_name, df_filtered):
         ], className="group-section mb-4")
     ])
 
-def create_segment_layout(segment, processed_data, AVAILABLE_MONTHS, branches, appointment_types, nationalities):
+def create_segment_layout(segment, processed_data, AVAILABLE_MONTHS, branches, appointment_types, nationalities, sc_names):
     """Create the layout for a specific segment"""
     # Filter data for this segment
     df_segment = processed_data[processed_data['segment'] == segment]
@@ -159,7 +159,7 @@ def create_segment_layout(segment, processed_data, AVAILABLE_MONTHS, branches, a
                                         multi=True,
                                         clearable=False
                                     )
-                                ], width=3),
+                                ], width=2),
                                 # Show all filters for branch segment
                                 *([
                                     dbc.Col([
@@ -171,7 +171,7 @@ def create_segment_layout(segment, processed_data, AVAILABLE_MONTHS, branches, a
                                             value="Overall",
                                             clearable=False
                                         )
-                                    ], width=3),
+                                    ], width=2),
                                     dbc.Col([
                                         html.Label("Appointment Type"),
                                         dcc.Dropdown(
@@ -181,7 +181,7 @@ def create_segment_layout(segment, processed_data, AVAILABLE_MONTHS, branches, a
                                             value="Overall",
                                             clearable=False
                                         )
-                                    ], width=3),
+                                    ], width=2),
                                     dbc.Col([
                                         html.Label("MS Nationality"),
                                         dcc.Dropdown(
@@ -191,12 +191,22 @@ def create_segment_layout(segment, processed_data, AVAILABLE_MONTHS, branches, a
                                             value="Overall",
                                             clearable=False
                                         )
-                                    ], width=3)
+                                    ], width=2),
+                                    dbc.Col([
+                                        html.Label("Sales Consultant"),
+                                        dcc.Dropdown(
+                                            id=f"{segment}-sc-filter",
+                                            options=[{"label": "Overall", "value": "Overall"}] + 
+                                                    [{"label": sc, "value": sc} for sc in sc_names],
+                                            value="Overall",
+                                            clearable=False
+                                        )
+                                    ], width=2)
                                 ] if segment == 'branch' else [])
                             ])
                         ])
                     )
-                ], width=12)
+                ], width=20)
             ], className="filter-row mb-4")
         ], className="sticky-filter-container"),
         
@@ -207,7 +217,7 @@ def create_segment_layout(segment, processed_data, AVAILABLE_MONTHS, branches, a
         html.Div([
             create_group_section(segment, group, df_segment) for group in groups
         ], className="group-sections-container", id=f"{segment}-groups-container")
-    ], className="segment-container")
+    ], className="segment-container", **{"data-segment": segment})
 
 def create_legend_section(segment="branch", visit_count=0):
     """Create a hover-based legend section with visit count on the left"""

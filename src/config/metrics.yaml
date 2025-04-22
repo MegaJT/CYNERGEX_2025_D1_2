@@ -60,7 +60,6 @@ metric_groups:
   OVERALL IMPRESSION:
     iQ7a: "Q7a.Overall Experience"
     iQ7c: "Q7c.Overall Sales Process"
-    iQ7d: "Q7d.Was SC convincing and logical?"
     iQ7f: "Q7f.Likelihood to return to delarship"
 
   PARKING / GUIDANCE AT ENTRY:
