@@ -358,9 +358,7 @@ def filter_data(df, branch, appointment_type, month, nationality, sc_name):
     filtered_df = df.copy()
     
     # Debug: Print initial data shape and SC_NAME values
-    print(f"Initial data shape: {filtered_df.shape}")
-    if 'SC_NAME' in filtered_df.columns:
-        print(f"Available SC_NAME values: {filtered_df['SC_NAME'].unique()}")
+    
     
     if branch != "Overall" and 'Branch' in filtered_df.columns:
         filtered_df = filtered_df[filtered_df['Branch'] == branch]
@@ -383,10 +381,6 @@ def filter_data(df, branch, appointment_type, month, nationality, sc_name):
         
     # Handle Sales Consultant filter using SC_NAME column
     if sc_name != "Overall" and 'SC_NAME' in filtered_df.columns:
-        print(f"Filtering by SC_NAME: {sc_name}")
-        print(f"Data before SC_NAME filter: {filtered_df.shape}")
         filtered_df = filtered_df[filtered_df['SC_NAME'] == sc_name]
-        print(f"Data after SC_NAME filter: {filtered_df.shape}")
-        print(f"Filtered SC_NAME values: {filtered_df['SC_NAME'].unique()}")
-    
+            
     return filtered_df

@@ -35,6 +35,8 @@ metric_groups:
     iQ11i: "Q11i.Consultant's communication clarity"
 
   "4 OVERALL IMPRESSION (SOCIAL MEDIA)":
+    iQ12a: "Q12a.Follow-up call prior to visit"
+    iQ12b: "Q12b.Timiing of that Follow-up call"
     iQ13: "Q13.Overall experience with Social Media"
 
 weight_variables:

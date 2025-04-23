@@ -25,9 +25,9 @@ metric_groups:
     iQ9m: "Q9m.Average time spent on call?"
 
   "3 SALES CONSULTANT INTERACTION":
-    iQ10a: "Q10a.Followup call prior to branch visit"
-    iQ10b: "Q10b.Time taken for followup-call"
-    iQ10d: "Q10d.Did Call Agent give right information?"
+    iQ10a: "Q10a.Did SC call back?"
+    iQ10b: "Q10b.Time to receive call from SC?"
+    iQ10d: "Q10d.Did SC understand about family & needs?"
     iQ10e: "Q10e.SC's attentiveness"
     iQ10f: "Q10f.Did SC summarize the need?"
     iQ19g: "Q19g.Did SC Personalize the conversation?"

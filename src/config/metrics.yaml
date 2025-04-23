@@ -58,12 +58,14 @@ metric_groups:
     iQ6g: "Q6g.Vehicle Inventory at Showroom"
 
   7.POST VISIT COMMUNICATION/FOLLOW UP:
-    iQ8a: "Q8a.Did SC followup?"
-    iQ8b: "Q8b.Time taken for followup"
-    iQ8c: "Q8c.Closing Conversation of a Followup Call"
+    iQ8a: "Q8a.SC asked preferred follow-up date/time?"
+    iQ8b: "Q8b.SC called on preferred date/time?"
+    iQ8c: "Q8c.What all SC communicated post your visit?"
 
   8.OVERALL IMPRESSION:
     iQ7a: "Q7a.Overall Experience"
+    iQ7c: "Q7c.Overall Sales Process"
+    iQ7d: "Q7d.Was SC convincing and logical?"
     iQ7f: "Q7f.Likelihood to return to delarship"
 
 

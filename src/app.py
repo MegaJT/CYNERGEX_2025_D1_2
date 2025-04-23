@@ -165,7 +165,7 @@ def create_dashboard_layout(user_id):
                 html.H1("CHERY UAE Mystery Shopping Dashboard")
             ], width=8, className="text-center"),
             dbc.Col([
-                html.Img(src=app.get_asset_url('CYN_Logo1.png'), className="logo float-right")
+                html.Img(src=app.get_asset_url('CYN_Logo2.png'), className="logo float-right")
             ], width=2)
         ], className="header-row mb-4"),
         

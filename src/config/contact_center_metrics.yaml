@@ -28,6 +28,8 @@ metric_groups:
     iQ3i: "Q3i.Clarity of SC's communication"
 
   4.OVERALL IMPRESSION:
+    iQ5a: "Q5a.Followup call prior to branch visit"
+    iQ5b: "Q5b.Time taken for followup-call"
     iQ5e: "Q5e.Overall Experience with contact centre"
 
 weight_variables:
