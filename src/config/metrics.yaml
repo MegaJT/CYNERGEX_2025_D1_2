@@ -13,6 +13,7 @@ metric_groups:
     iQ2f: "Q2f.Sales Consultant Appearance"
 
   3.SALES CONSULTATION INTERACTION:
+    iQ3n: "Q3n.Did SC offer Business Card?"
     iQ3a: "Q3a.SC's Manners throughout discussion"
     iQ3b: "Q3b.Did SC Recheck/confirm the customer details - Appointment Customers"
     iQ3c: "Q3c.Did SC ask personal information? - Walking Customers"
@@ -26,7 +27,7 @@ metric_groups:
     iQ3k: "Q3k.Did SC asked Spouse Preference?"
     iQ3l: "Q3l.Did SC Summarize customer needs"
     iQ3m: "Q3m.SC's frendiliness "
-    iQ3n: "Q3n.Did SC offer Business Card?"
+    
 
   4.SALES CONSULTATION KNOWLEDGE:
     iQ4a: "Q4a.Did SC Stated Advance vs. Comp.?"
@@ -60,7 +61,7 @@ metric_groups:
   7.POST VISIT COMMUNICATION/FOLLOW UP:
     iQ8a: "Q8a.SC asked preferred follow-up date/time?"
     iQ8b: "Q8b.SC called on preferred date/time?"
-    iQ8c: "Q8c.What all SC communicated post your visit?"
+    iQ8c: "Q8c.What all SC communicated post your visit?"
 
   8.OVERALL IMPRESSION:
     iQ7a: "Q7a.Overall Experience"
@@ -70,12 +71,12 @@ metric_groups:
 
 
 weight_variables:
-  PARKING / GUIDANCE AT ENTRY: wFacility      
-  INITIAL GREET: wInitialgreet
-  SALES CONSULTATION INTERACTION: wCONSULTANTINTERACTION
-  SALES CONSULTATION KNOWLEDGE: wCONSULTANTKNOWLEDGE
-  CLOSING / FINANCE / DOCUMENTATION: wClosing
-  FACILITIES IN SHOWROOM: wFacilityEnvironment
-  POST VISIT COMMUNICATION/FOLLOW UP: wFollowup
-  OVERALL IMPRESSION: wOverallImpression
+  1.PARKING / GUIDANCE AT ENTRY: wFacility      
+  2.INITIAL GREET: wInitialgreet
+  3.SALES CONSULTATION INTERACTION: wCONSULTANTINTERACTION
+  4.SALES CONSULTATION KNOWLEDGE: wCONSULTANTKNOWLEDGE
+  5.CLOSING / FINANCE / DOCUMENTATION: wClosing
+  6.FACILITIES IN SHOWROOM: wFacilityEnvironment
+  7.POST VISIT COMMUNICATION/FOLLOW UP: wFollowup
+  8.OVERALL IMPRESSION: wOverallImpression
   

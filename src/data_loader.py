@@ -154,6 +154,7 @@ def load_branch_data(user_id=None):
     nationalities = get_unique_values(branch_df, 'NATIONALITY', ['Local', 'Expat'])
     sc_names = get_unique_values(branch_df, 'SC_NAME', [])
     
+    
     # Prepare dashboard data
     processed_data = prepare_dashboard_data(branch_df, AVAILABLE_MONTHS, 'branch')
     
@@ -356,8 +357,6 @@ def prepare_dashboard_data(df, AVAILABLE_MONTHS=None, segment=None):
 def filter_data(df, branch, appointment_type, month, nationality, sc_name):
     """Filter data based on user selections"""
     filtered_df = df.copy()
-    
-    # Debug: Print initial data shape and SC_NAME values
     
     
     if branch != "Overall" and 'Branch' in filtered_df.columns:
