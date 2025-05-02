@@ -13,7 +13,7 @@ metric_groups:
     iQ2f: "Q2f. Sales Consultant Appearance"
 
   3.SALES CONSULTATION INTERACTION:
-    iQ3n: "Q3n. Did SC offer Business Card?"
+    iQ3n: "Q3n. Shared the business card before at the start of  interaction"
     iQ3a: "Q3a. SC's Manners throughout discussion"
     iQ3b: "Q3b. Did SC Recheck/confirm the customer details - Appointment Customers"
     iQ3c: "Q3c. Did SC ask personal information? - Walking Customers"
