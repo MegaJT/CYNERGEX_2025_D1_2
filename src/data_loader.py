@@ -33,7 +33,8 @@ def load_data(data_file, segment):
             15: 'Jennie Villanueva',
             16: 'Hiba Taha',
             17: 'Yaman Zaitoun',
-            18: 'NO SC ASSIGNED',
+            18: 'Ahmed Elhusseini',
+            19: 'NO SC ASSIGNED',
         }
         
         if segment == 'Branch':
