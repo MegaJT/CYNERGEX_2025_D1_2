@@ -148,7 +148,7 @@ def create_segment_layout(segment, processed_data, AVAILABLE_MONTHS, branches, a
                     dbc.Card(
                         dbc.CardBody([
                             dbc.Row([
-                                # Only show month filter for contact-center
+                                # Only show month filter for contact-centre
                                 dbc.Col([
                                     html.Label("Month"),
                                     dcc.Dropdown(
@@ -233,7 +233,7 @@ def create_legend_section(segment="branch", visit_count=0):
             dbc.Col([
                 html.P(id=f"{segment}-visit-count", children=f"Base: {visit_count} Visits", 
                        className="mt-2 font-weight-bold")
-            ], width=3, className="d-flex align-items-center"),
+            ], width=3, className="d-flex align-items-centre"),
             
             # Legend on the right
             dbc.Col([

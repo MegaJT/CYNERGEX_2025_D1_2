@@ -41,7 +41,7 @@ def register_callbacks(app):
         return "Select a segment to view data.", 'branch'
 
     # Add callback for month filter validation
-    for segment in ['branch', 'contact-center', 'website', 'social-media']:
+    for segment in ['branch', 'contact-centre', 'website', 'social-media','combined-contact-centre']:
         @app.callback(
             Output(f"{segment}-month-filter", "value"),
             Input(f"{segment}-month-filter", "value")
@@ -91,40 +91,40 @@ def register_callbacks(app):
         
         return updated_group_sections, f"Base: {visit_count} Visits"
 
-    # Callback for contact-center segment
+    # Callback for contact-centre segment
     @app.callback(
-        Output(f"contact-center-groups-container", "children"),
-        Output(f"contact-center-visit-count", "children"),
-        [Input(f"contact-center-month-filter", "value"),
-         Input(f"contact-center-sc-filter", "value"),
+        Output(f"contact-centre-groups-container", "children"),
+        Output(f"contact-centre-visit-count", "children"),
+        [Input(f"contact-centre-month-filter", "value"),
+         Input(f"contact-centre-sc-filter", "value"),
          Input("user-id", "data")]
     )
-    def update_contact_center_content(month, sc_name, user_id):
+    def update_contact_centre_content(month, sc_name, user_id):
         if user_id not in app.user_data:
             return [], "Base: 0 Visits"
         
         # Get pre-filtered data for this user
-        contact_center_df = app.user_data[user_id]['contact-center']['df']
-        contact_center_available_months = app.user_data[user_id]['contact-center']['months']
+        contact_centre_df = app.user_data[user_id]['contact-centre']['df']
+        contact_centre_available_months = app.user_data[user_id]['contact-centre']['months']
         
         # Filter the raw dataframe based on selections
-        filtered_raw_df = filter_data(contact_center_df, "Overall", "Overall", month, "Overall", sc_name)
+        filtered_raw_df = filter_data(contact_centre_df, "Overall", "Overall", month, "Overall", sc_name)
         
         # Update visit count
         visit_count = len(filtered_raw_df)
         
         # Recalculate the metrics based on the filtered data
-        filtered_processed_data = prepare_dashboard_data(filtered_raw_df, contact_center_available_months, 'contact-center')
+        filtered_processed_data = prepare_dashboard_data(filtered_raw_df, contact_centre_available_months, 'contact-centre')
         
-        # Get the contact-center segment data
-        df_segment = filtered_processed_data[filtered_processed_data['segment'] == 'contact-center']
+        # Get the contact-centre segment data
+        df_segment = filtered_processed_data[filtered_processed_data['segment'] == 'contact-centre']
         
         # Get unique groups
         groups = df_segment['group'].unique()
         
         # Create updated group sections
         updated_group_sections = [
-            create_group_section('contact-center', group, df_segment) for group in groups
+            create_group_section('contact-centre', group, df_segment) for group in groups
         ]
         
         return updated_group_sections, f"Base: {visit_count} Visits"
@@ -201,6 +201,45 @@ def register_callbacks(app):
         # Create updated group sections
         updated_group_sections = [
             create_group_section('social-media', group, df_segment) for group in groups
+        ]
+        
+        return updated_group_sections, f"Base: {visit_count} Visits"
+
+    # Callback for contact-centre segment
+    @app.callback(
+        Output(f"combined-contact-centre-groups-container", "children"),
+        Output(f"combined-contact-centre-visit-count", "children"),
+        [Input(f"combined-contact-centre-month-filter", "value"),
+         Input(f"combined-contact-centre-sc-filter", "value"),
+         Input("user-id", "data")]
+    )
+    def combined_update_contact_centre_content(month, sc_name, user_id):
+        if user_id not in app.user_data:
+            return [], "Base: 0 Visits"
+        
+        # Get pre-filtered data for this user
+        combined_contact_centre_df = app.user_data[user_id]['combined-contact-centre']['df']
+        combined_contact_centre_available_months = app.user_data[user_id]['combined-contact-centre']['months']
+        
+        # Filter the raw dataframe based on selections
+        filtered_raw_df = filter_data(combined_contact_centre_df, "Overall", "Overall", month, "Overall", sc_name)
+        
+        
+        # Update visit count
+        visit_count = len(filtered_raw_df)
+        
+        # Recalculate the metrics based on the filtered data
+        filtered_processed_data = prepare_dashboard_data(filtered_raw_df, combined_contact_centre_available_months, 'combined-contact-centre')
+        
+        # Get the contact-centre segment data
+        df_segment = filtered_processed_data[filtered_processed_data['segment'] == 'combined-contact-centre']
+        
+        # Get unique groups
+        groups = df_segment['group'].unique()
+        
+        # Create updated group sections
+        updated_group_sections = [
+            create_group_section('combined-contact-centre', group, df_segment) for group in groups
         ]
         
         return updated_group_sections, f"Base: {visit_count} Visits"

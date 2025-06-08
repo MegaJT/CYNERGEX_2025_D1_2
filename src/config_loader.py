@@ -54,14 +54,14 @@ class ConfigLoader:
         config = self.get_config('metrics.yaml')
         return config['weight_variables']
     
-    def get_contact_center_metric_groups(self) -> Dict[str, Dict[str, str]]:
-        """Get Contact Center metric group definitions."""
-        config = self.get_config('contact_center_metrics.yaml')
+    def get_contact_centre_metric_groups(self) -> Dict[str, Dict[str, str]]:
+        """Get Contact Centre metric group definitions."""
+        config = self.get_config('contact_centre_metrics.yaml')
         return config['metric_groups']
     
-    def get_contact_center_weight_variables(self) -> Dict[str, str]:
-        """Get Contact Center weight variables."""
-        config = self.get_config('contact_center_metrics.yaml')
+    def get_contact_centre_weight_variables(self) -> Dict[str, str]:
+        """Get Contact Centre weight variables."""
+        config = self.get_config('contact_centre_metrics.yaml')
         return config['weight_variables']
     
     def get_website_metric_groups(self) -> Dict[str, Dict[str, str]]:
@@ -82,6 +82,16 @@ class ConfigLoader:
     def get_social_media_weight_variables(self) -> Dict[str, str]:
         """Get Social Media weight variables."""
         config = self.get_config('social_media_metrics.yaml')
+        return config['weight_variables']
+    
+    def get_combined_contact_centre_metric_groups(self) -> Dict[str, Dict[str, str]]:
+        """Get Combined Contact Centre metric group definitions."""
+        config = self.get_config('combined_contact_centre_metrics.yaml')
+        return config['metric_groups']
+    
+    def get_combined_contact_centre_weight_variables(self) -> Dict[str, str]:
+        """Get Combined Contact Centre weight variables."""
+        config = self.get_config('combined_contact_centre_metrics.yaml')
         return config['weight_variables']
 
 # Create a global instance

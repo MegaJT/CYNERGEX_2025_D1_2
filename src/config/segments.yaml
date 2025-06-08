@@ -1,5 +1,6 @@
 segments:
   branch: Branch Evaluation
-  contact-center: Direct Contact Center Evaluation
+  contact-centre: Direct Contact Centre Evaluation
   website: Website Evaluation
   social-media: Social Media Evaluation 
+  combined-contact-centre: Combined Contact Centre Evaluation

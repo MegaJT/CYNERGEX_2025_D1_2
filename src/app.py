@@ -12,7 +12,7 @@ from datetime import timedelta
 import os
 
 # Import from our modules
-from data_loader import load_branch_data, load_contact_center_data, load_website_data, load_social_media_data, prepare_dashboard_data
+from data_loader import load_branch_data, load_contact_centre_data, load_website_data, load_social_media_data,load_combined_contact_centre_data, prepare_dashboard_data
 from layout_components import create_segment_layout
 from callbacks import register_callbacks
 from config import SEGMENTS
@@ -85,9 +85,11 @@ app.user_data = {}
 def load_all_data():
     # Load the raw data for each segment
     branch_df, branch_processed_data, branch_available_months, branch_branches, branch_appointment_types, branch_nationalities, branch_sc_names = load_branch_data()
-    contact_center_df, contact_center_processed_data, contact_center_available_months, _, _, _, contact_center_sc_names = load_contact_center_data()
+    contact_centre_df, contact_centre_processed_data, contact_centre_available_months, _, _, _, contact_centre_sc_names = load_contact_centre_data()
     website_df, website_processed_data, website_available_months, _, _, _, website_sc_names = load_website_data()
     social_media_df, social_media_processed_data, social_media_available_months, _, _, _, social_media_sc_names = load_social_media_data()
+    combined_contact_centre_df, combined_contact_centre_processed_data, combined_contact_centre_available_months, _, _, _, combined_contact_centre_sc_names = load_combined_contact_centre_data()
+    
     
     # Pre-filter branch data for each user
     for user_id in VALID_CODES.values():
@@ -97,15 +99,17 @@ def load_all_data():
             filtered_branch_processed = branch_processed_data.copy()
             filtered_branches = branch_branches.copy()
             # Combine SC names from all segments
-            all_sc_names = list(set(branch_sc_names + contact_center_sc_names + website_sc_names + social_media_sc_names))
+            all_sc_names = list(set(branch_sc_names + contact_centre_sc_names + website_sc_names + social_media_sc_names))
             filtered_sc_names = sorted(all_sc_names) if all_sc_names else branch_sc_names.copy()
+            
         else:
             # Filter data for specific branch/location
             filtered_branch_df = branch_df[branch_df['Branch'].str.contains(user_id, case=False)]
             filtered_branches = [b for b in branch_branches if user_id.lower() in b.lower()]
             # Combine SC names from all segments for this branch
-            all_sc_names = list(set(branch_sc_names + contact_center_sc_names + website_sc_names + social_media_sc_names))
+            all_sc_names = list(set(branch_sc_names + contact_centre_sc_names + website_sc_names + social_media_sc_names))
             filtered_sc_names = sorted(all_sc_names) if all_sc_names else branch_sc_names.copy()
+            
         
         # Store pre-filtered data for this user
         app.user_data[user_id] = {
@@ -118,11 +122,11 @@ def load_all_data():
                 'nationalities': branch_nationalities,
                 'sc_names': filtered_sc_names
             },
-            'contact-center': {
-                'df': contact_center_df,
-                'processed': contact_center_processed_data,
-                'months': contact_center_available_months,
-                'sc_names': contact_center_sc_names
+            'contact-centre': {
+                'df': contact_centre_df,
+                'processed': contact_centre_processed_data,
+                'months': contact_centre_available_months,
+                'sc_names': contact_centre_sc_names
             },
             'website': {
                 'df': website_df,
@@ -135,15 +139,22 @@ def load_all_data():
                 'processed': social_media_processed_data,
                 'months': social_media_available_months,
                 'sc_names': social_media_sc_names
+            },
+            'combined-contact-centre': {
+                'df': combined_contact_centre_df,
+                'processed': combined_contact_centre_processed_data,
+                'months': combined_contact_centre_available_months,
+                'sc_names': combined_contact_centre_sc_names
             }
         }
         
         # Create combined processed data for this user
         app.user_data[user_id]['combined_processed'] = pd.concat([
             filtered_branch_processed,
-            contact_center_processed_data,
+            contact_centre_processed_data,
             website_processed_data,
-            social_media_processed_data
+            social_media_processed_data,
+            contact_centre_processed_data
         ], ignore_index=True)
 
 # Load data at startup
@@ -173,9 +184,10 @@ def create_dashboard_layout(user_id):
         # Tabs for different segments
         dbc.Tabs([
             dbc.Tab(label=SEGMENTS['branch'], tab_id='branch'),
-            dbc.Tab(label=SEGMENTS['contact-center'], tab_id='contact-center'),
+            dbc.Tab(label=SEGMENTS['contact-centre'], tab_id='contact-centre'),
             dbc.Tab(label=SEGMENTS['website'], tab_id='website'),
             dbc.Tab(label=SEGMENTS['social-media'], tab_id='social-media'),
+            dbc.Tab(label=SEGMENTS['combined-contact-centre'], tab_id='combined-contact-centre'),
         ], id='segment-tabs', active_tab='branch', className="mb-4"),
         
         # Content div - will be populated based on selected tab

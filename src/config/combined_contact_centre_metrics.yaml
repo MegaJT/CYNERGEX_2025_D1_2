@@ -1,0 +1,34 @@
+metric_groups:
+  "2 CALL AGENT GREETING":
+    iQ2b: "Q2b. Backgrpound Noise on Call"
+    iQ2c: "Q2c. Was call agent polite and assisting?"
+    iQ2d: "Q2d. Call Agent Attentiveness"
+    iQ2e: "Q2e. Did Call Agent Personalize Interaction?"
+    iQ2f: "Q2f. Call Agent's Manners"
+    iQ2g: "Q2g. Clarity of Call Agent's communication"
+    iQ2h: "Q2h. Did Call Agent asked relevant information?"
+    iQ2i_1: "Q2i. Did Call Agent give right information?"
+    iQ2i_2: "Q2j. Did Call Agent Confirms Appointment?"
+    iQ2k_1: "Q2k. Did Call Agent asked if appointment date is fine?"
+    iQ2l: "Q2l. Did customer get a confirmation on appointment?"
+    iQ2m: "Q2m. Average time spent on call?"
+
+  "3 SALES CONSULTANT INTERACTION":
+    iQ3a: "Q3a. Sales consultant call received"
+    iQ3b: "Q3b. Time to contact by consultant?"
+    iQ3d: "Q3d. Did SC understand about family & needs?"
+    iQ3e: "Q3e. SC's attentiveness"
+    iQ3f: "Q3f. Did SC summarize the need?"
+    iQ3g: "Q3g. Did SC Personalize the conversation?"
+    iQ3h: "Q3h. SC's manners throughout the interaction"
+    iQ3i: "Q3i. Clarity of SC's communication"
+
+  "4 OVERALL IMPRESSION":
+    iQ5a: "Q5a. Follow up prior to branch visit?"
+    iQ5b: "Q5b. Time taken for followup call"
+    iQ5e: "Q5e. Overall Experience "
+
+weight_variables:
+  "2 CALL AGENT GREETING": wAGENTGREETING
+  "3 SALES CONSULTANT INTERACTION": wINTERACTION
+  "4 OVERALL IMPRESSION": wIMPRESSION 

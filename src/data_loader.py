@@ -41,7 +41,7 @@ def load_data(data_file, segment):
             try:
                 df['Branch'] = df['Branch'].map({1: 'Dubai', 2: 'Sharjah', 3: 'Abu Dhabi'})
                 df['NATIONALITY'] = df['NATIONALITY'].map({1: 'Emarati', 2: 'Non-Emarati'})
-                df['Q1_1'] = df['Q1_1'].map({1: 'Social Media Lead', 2: 'Website Visit Lead', 3: 'Call Centre Lead', 4: 'Walkin Customer'})
+                df['Q1_1'] = df['Q1_1'].map({1: 'Social Media Lead', 2: 'Website Visit Lead', 3: 'Call centre Lead', 4: 'Walkin Customer'})
                 df['WAVE'] = df['WAVE'].map(MONTH_DICT)
                 if 'SC_NAME' in df.columns:
                     df['SC_NAME'] = df['SC_NAME'].map(sc_name_mapping)
@@ -53,6 +53,7 @@ def load_data(data_file, segment):
                 df['WAVE'] = df['WAVE'].map(MONTH_DICT)
                 if 'SC_NAME' in df.columns:
                     df['SC_NAME'] = df['SC_NAME'].map(sc_name_mapping)
+                
             except Exception as e:
                 df = pd.DataFrame()
         
@@ -69,9 +70,19 @@ def load_data(data_file, segment):
                 df['WAVE'] = df['WAVE'].map(MONTH_DICT)
                 if 'SC_NAME' in df.columns:
                     df['SC_NAME'] = df['SC_NAME'].map(sc_name_mapping)
+
             except Exception as e:
                 df = pd.DataFrame()
-                
+
+        elif segment == 'Combined Contact Centre':
+            try:
+                df['WAVE'] = df['WAVE'].map(MONTH_DICT)
+                if 'SC_NAME' in df.columns:
+                    df['SC_NAME'] = df['SC_NAME'].map(sc_name_mapping)
+                   
+            except Exception as e:
+                df = pd.DataFrame()
+            
         return df
     except Exception as e:
         return pd.DataFrame()
@@ -161,39 +172,39 @@ def load_branch_data(user_id=None):
     
     return branch_df, processed_data, AVAILABLE_MONTHS, branches, appointment_types, nationalities, sc_names
 
-def load_contact_center_data(user_id=None):
+def load_contact_centre_data(user_id=None):
     """
-    Load contact center data and prepare it for the dashboard
+    Load contact centre data and prepare it for the dashboard
     
     Args:
         user_id (str, optional): User ID to filter data by branch. Admin sees all data.
     
     Returns:
-        tuple: (contact_center_df, processed_data, AVAILABLE_MONTHS, branches, appointment_types, nationalities, sc_names)
+        tuple: (contact_centre_df, processed_data, AVAILABLE_MONTHS, branches, appointment_types, nationalities, sc_names)
     """
-    # Load the contact center evaluation data
-    contact_center_df = load_data('CHERY_CONTACT_CENTRE_EVAL_DASH CSV.csv', 'Contact Centre')
+    # Load the contact centre evaluation data
+    contact_centre_df = load_data('CHERY_CONTACT_CENTRE_EVAL_DASH CSV.csv', 'Contact Centre')
     
-    if contact_center_df.empty:
-        return contact_center_df, pd.DataFrame(), [], [], [], [], []
+    if contact_centre_df.empty:
+        return contact_centre_df, pd.DataFrame(), [], [], [], [], []
     
     # Filter data by user_id if provided
     if user_id and user_id != 'Admin':
-        contact_center_df = filter_data_by_user(contact_center_df, user_id)
+        contact_centre_df = filter_data_by_user(contact_centre_df, user_id)
     
     # Get available months
-    AVAILABLE_MONTHS = get_available_months(contact_center_df)
+    AVAILABLE_MONTHS = get_available_months(contact_centre_df)
     
     # Get unique values for filters
     branches = ['Overall']
     appointment_types = ['Overall']
     nationalities = ['Overall']
-    sc_names = get_unique_values(contact_center_df, 'SC_NAME', [])
+    sc_names = get_unique_values(contact_centre_df, 'SC_NAME', [])
     
     # Prepare dashboard data
-    processed_data = prepare_dashboard_data(contact_center_df, AVAILABLE_MONTHS, 'contact-center')
+    processed_data = prepare_dashboard_data(contact_centre_df, AVAILABLE_MONTHS, 'contact-centre')
     
-    return contact_center_df, processed_data, AVAILABLE_MONTHS, branches, appointment_types, nationalities, sc_names
+    return contact_centre_df, processed_data, AVAILABLE_MONTHS, branches, appointment_types, nationalities, sc_names
 
 def load_website_data(user_id=None):
     """
@@ -228,6 +239,34 @@ def load_website_data(user_id=None):
     processed_data = prepare_dashboard_data(website_df, AVAILABLE_MONTHS, 'website')
     
     return website_df, processed_data, AVAILABLE_MONTHS, branches, appointment_types, nationalities, sc_names
+
+def load_combined_contact_centre_data(user_id=None):
+    
+    # Load the CC combine evaluation data
+    cc_combined_df = load_data('CONTACT_CENTRE_CON CSV.csv', 'Combined Contact Centre')
+    
+    
+
+    if cc_combined_df.empty:
+        return cc_combined_df, pd.DataFrame(), [], [], [], [], []
+    
+    # Filter data by user_id if provided
+    if user_id and user_id != 'Admin':
+        cc_combined_df = filter_data_by_user(cc_combined_df, user_id)
+    
+    # Get available months
+    AVAILABLE_MONTHS = get_available_months(cc_combined_df)
+    
+    # Get unique values for filters
+    branches = ['Overall']
+    appointment_types = ['Overall']
+    nationalities = ['Overall']
+    sc_names = get_unique_values(cc_combined_df, 'SC_NAME', [])
+    
+    # Prepare dashboard data
+    processed_data = prepare_dashboard_data(cc_combined_df, AVAILABLE_MONTHS, 'combined-contact-centre')
+    
+    return cc_combined_df, processed_data, AVAILABLE_MONTHS, branches, appointment_types, nationalities, sc_names
 
 def load_social_media_data(user_id=None):
     """
@@ -279,10 +318,10 @@ def prepare_dashboard_data(df, AVAILABLE_MONTHS=None, segment=None):
     if segment == 'branch':
         metric_groups = BRANCH_METRIC_GROUPS
         weight_vars = GROUP_WEIGHT_VARS
-    elif segment == 'contact-center':
-        from config import CONTACT_CENTER_METRIC_GROUPS, CONTACT_CENTER_WEIGHT_VARS
-        metric_groups = CONTACT_CENTER_METRIC_GROUPS
-        weight_vars = CONTACT_CENTER_WEIGHT_VARS
+    elif segment == 'contact-centre':
+        from config import CONTACT_CENTRE_METRIC_GROUPS, CONTACT_CENTRE_WEIGHT_VARS
+        metric_groups = CONTACT_CENTRE_METRIC_GROUPS
+        weight_vars = CONTACT_CENTRE_WEIGHT_VARS
     elif segment == 'website':
         from config import WEBSITE_METRIC_GROUPS, WEBSITE_WEIGHT_VARS
         metric_groups = WEBSITE_METRIC_GROUPS
@@ -291,6 +330,10 @@ def prepare_dashboard_data(df, AVAILABLE_MONTHS=None, segment=None):
         from config import SOCIAL_MEDIA_METRIC_GROUPS, SOCIAL_MEDIA_WEIGHT_VARS
         metric_groups = SOCIAL_MEDIA_METRIC_GROUPS
         weight_vars = SOCIAL_MEDIA_WEIGHT_VARS
+    elif segment == 'combined-contact-centre':
+        from config import COMBINED_CONTACT_CENTRE_METRIC_GROUPS, COMBINED_CONTACT_CENTRE_WEIGHT_VARS
+        metric_groups = COMBINED_CONTACT_CENTRE_METRIC_GROUPS
+        weight_vars = COMBINED_CONTACT_CENTRE_WEIGHT_VARS    
     else:
         return pd.DataFrame(columns=['segment', 'group', 'metric_id', 'metric', 'score', 'monthly_scores', 'is_group_score'])
     
@@ -348,7 +391,7 @@ def prepare_dashboard_data(df, AVAILABLE_MONTHS=None, segment=None):
                     'is_group_score': False
                 })
     
-    # Create DataFrame from processed data
+    
     if processed_data:
         return pd.DataFrame(processed_data)
     else:
