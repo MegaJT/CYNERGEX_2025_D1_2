@@ -1,7 +1,4 @@
 metric_groups:
-  "1.ATTEMPTS TO GET ANSWERED":
-    iQ1a: "Q1a. No. of attempts for connecting"
-    iQ1b: "Q1b. Did receive a call after first attempt?"
   "2 CALL AGENT GREETING":
     iQ2b: "Q2b. Backgrpound Noise on Call"
     iQ2c: "Q2c. Was call agent polite and assisting?"
@@ -16,12 +13,22 @@ metric_groups:
     iQ2l: "Q2l. Did customer get a confirmation on appointment?"
     iQ2m: "Q2m. Average time spent on call?"
 
-  "3 OVERALL IMPRESSION":
+  "3 SALES CONSULTANT INTERACTION":
+    iQ3a: "Q3a. Sales consultant call received"
+    iQ3b: "Q3b. Time to contact by consultant?"
+    iQ3d: "Q3d. Did SC understand about family & needs?"
+    iQ3e: "Q3e. SC's attentiveness"
+    iQ3f: "Q3f. Did SC summarize the need?"
+    iQ3g: "Q3g. Did SC Personalize the conversation?"
+    iQ3h: "Q3h. SC's manners throughout the interaction"
+    iQ3i: "Q3i. Clarity of SC's communication"
+
+  "4 OVERALL IMPRESSION":
     iQ5a: "Q5a. Follow up prior to branch visit?"
     iQ5b: "Q5b. Time taken for followup call"
     iQ5e: "Q5e. Overall Experience "
 
 weight_variables:
-  "1.ATTEMPTS TO GET ANSWERED": wGREETING
   "2 CALL AGENT GREETING": wAGENTGREETING
-  "3 OVERALL IMPRESSION": wIMPRESSION 
+  "3 SALES CONSULTANT INTERACTION": wINTERACTION
+  "4 OVERALL IMPRESSION": wIMPRESSION 

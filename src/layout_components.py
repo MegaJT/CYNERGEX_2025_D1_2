@@ -22,6 +22,8 @@ def create_score_card(score, title, monthly_scores=None, color_class=""):
     
     # Format the score display
     score_display = "N/A" if pd.isna(score) else f"{score}"
+    if score_display == "N/A":
+        color= "NA"  # Use secondary color for N/A scores
     
     return dbc.Card(
         dbc.CardBody([
@@ -52,6 +54,8 @@ def create_monthly_trend_chart(monthly_scores):
         short_month = month
         # Format the score display
         score_display = "N/A" if pd.isna(score) else f"{score}"
+        #if score_display == "N/A":
+        #    color = "NA"  # Use secondary color for N/A scores
         trend_dots.append(
             html.Div([
                 html.Span(short_month, className="trend-month"),
