@@ -353,7 +353,7 @@ def prepare_dashboard_data(df, AVAILABLE_MONTHS=None, segment=None):
                 month_df = df[df['WAVE'] == month]
                 if not month_df.empty and weight_var in month_df.columns:
                     month_score = calculate_metric_score(month_df, weight_var)
-                    monthly_scores[month] = round(month_score, 1)
+                    monthly_scores[month] = int(round(month_score, 0))
             
             # Add group score as a special entry
             processed_data.append({
@@ -361,7 +361,7 @@ def prepare_dashboard_data(df, AVAILABLE_MONTHS=None, segment=None):
                 'group': group_name,
                 'metric_id': weight_var,
                 'metric': f"{group_name} OVERALL",
-                'score': round(group_score, 1),
+                'score': round(group_score, 0),
                 'monthly_scores': monthly_scores,
                 'is_group_score': True
             })
@@ -378,7 +378,7 @@ def prepare_dashboard_data(df, AVAILABLE_MONTHS=None, segment=None):
                     month_df = df[df['WAVE'] == month]
                     if not month_df.empty:
                         month_score = calculate_metric_score(month_df, metric_id)
-                        monthly_scores[month] = round(month_score, 1)
+                        monthly_scores[month] = round(month_score, 0)
                 
                 # Add to processed data
                 processed_data.append({
@@ -386,7 +386,7 @@ def prepare_dashboard_data(df, AVAILABLE_MONTHS=None, segment=None):
                     'group': group_name,
                     'metric_id': metric_id,
                     'metric': metric_name,
-                    'score': round(current_score, 1),
+                    'score': round(current_score, 0),
                     'monthly_scores': monthly_scores,
                     'is_group_score': False
                 })
