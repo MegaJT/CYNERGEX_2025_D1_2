@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 from config import MONTH_DICT, BRANCH_METRIC_GROUPS, GROUP_WEIGHT_VARS
+import math
 
 def load_data(data_file, segment):
     """Load data from CSV file and preprocess it"""
@@ -346,6 +347,8 @@ def prepare_dashboard_data(df, AVAILABLE_MONTHS=None, segment=None):
         if weight_var and weight_var in df.columns:
             # Calculate group score directly from the weight variable
             group_score = calculate_metric_score(df, weight_var)
+            group_score = int(round(group_score, 0)) if not math.isnan(group_score) else group_score
+            
             
             # Calculate monthly scores for the group
             monthly_scores = {}
@@ -353,7 +356,9 @@ def prepare_dashboard_data(df, AVAILABLE_MONTHS=None, segment=None):
                 month_df = df[df['WAVE'] == month]
                 if not month_df.empty and weight_var in month_df.columns:
                     month_score = calculate_metric_score(month_df, weight_var)
-                    monthly_scores[month] = int(round(month_score, 0))
+                    #monthly_scores[month] = int(round(month_score, 0))
+                    monthly_scores[month] = int(round(month_score, 0)) if not math.isnan(month_score) else month_score
+
             
             # Add group score as a special entry
             processed_data.append({
@@ -378,7 +383,8 @@ def prepare_dashboard_data(df, AVAILABLE_MONTHS=None, segment=None):
                     month_df = df[df['WAVE'] == month]
                     if not month_df.empty:
                         month_score = calculate_metric_score(month_df, metric_id)
-                        monthly_scores[month] = round(month_score, 0)
+                        #monthly_scores[month] = round(month_score, 0)
+                        monthly_scores[month] = int(round(month_score, 0)) if not math.isnan(month_score) else month_score
                 
                 # Add to processed data
                 processed_data.append({
