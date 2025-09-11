@@ -18,7 +18,7 @@ metric_groups:
     iQ3b: "Q3b. Did SC Recheck/confirm the customer details - Appointment Customers"
     iQ3c: "Q3c. Did SC ask personal information? - Walking Customers"
     iQ3d: "Q3d. Did SC Personalise the Discussion"
-    iQ3d_11: "Q3d_11. SC asked source of information for Chery"
+    iQ3d_1: "Q3d_1. SC asked source of information for Chery"
     iQ3e: "Q3e. SC asked the qualifications questions?"
     iQ3f: "Q3f. Did SC asked all required information from customer?"
     iQ3g: "Q3g. Did SC offer water/beverage?"
