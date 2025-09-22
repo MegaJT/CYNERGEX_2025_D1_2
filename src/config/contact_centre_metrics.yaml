@@ -17,19 +17,8 @@ metric_groups:
     iQ2l: "Q2l. Did customer get a confirmation on appointment?"
     iQ2m: "Q2m. Average time spent on call?"
 
-  3.SALES CONSULTANT INTERACTION:
-    iQ3a: "Q3a. Did SC call back?"
-    iQ3b: "Q3b. Time to receive call from SC?"
-    iQ3d: "Q3d. Did SC understand about family & needs?"
-    iQ3e: "Q3e. SC's attentiveness"
-    iQ3f: "Q3f. Did SC summarize the need?"
-    iQ3g: "Q3g. Did SC Personalize the conversation?"
-    iQ3h: "Q3h. SC's manners throughout the interaction"
-    iQ3i: "Q3i. Clarity of SC's communication"
-
+  
   4.OVERALL IMPRESSION:
-    iQ5a: "Q5a. Followup call prior to branch visit"
-    iQ5b: "Q5b. Time taken for followup-call"
     iQ5e: "Q5e. Overall Experience with contact centre"
 
 weight_variables:

@@ -17,8 +17,6 @@ metric_groups:
     iQ2m: "Q2m. Average time spent on call?"
 
   "3 OVERALL IMPRESSION":
-    iQ5a: "Q5a. Follow up prior to branch visit?"
-    iQ5b: "Q5b. Time taken for followup call"
     iQ5e: "Q5e. Overall Experience "
 
 weight_variables:
